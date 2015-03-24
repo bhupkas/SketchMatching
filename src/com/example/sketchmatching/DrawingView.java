@@ -14,6 +14,7 @@ import com.example.sketchmatching.R;
 
 import android.view.View;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,15 +28,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
+import android.widget.Button;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
 public class DrawingView extends View {
-	
+		  
 	//drawing path
-	private Path drawPath;
+	private Path drawPath,temp;
 	//drawing and canvas paint
 	private Paint drawPaint, drawPaint2 ;
 	private Paint  canvasPaint2,canvasPaint;
@@ -57,14 +59,13 @@ public class DrawingView extends View {
 	boolean nahi=false;
 	
 	public DrawingView(Context context_, AttributeSet attrs){
-	    super(context_, attrs);
-	    setupDrawing();
+		super(context_, attrs);
+		setupDrawing();
 	    context = context_;
 	    assetManager = context.getAssets();
 	  //  ns = new nativeShadow(assetManager);
-	     
-	}
 	
+	}
 	private void setupDrawing(){
 		//get drawing area setup for interaction 
 		brushSize = getResources().getInteger(R.integer.small_size);
@@ -105,14 +106,13 @@ public class DrawingView extends View {
 	//view given size
 		super.onSizeChanged(w, h, oldw, oldh);
 		canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		canvasBitmap.eraseColor(Color.WHITE);
 		drawCanvas = new Canvas(canvasBitmap);
 		canvasBitmap2 = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		canvasBitmap2.eraseColor(Color.WHITE);
 		projection = new Canvas(canvasBitmap2);
 	//	projectShadow();
 	}
-	
-	
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -123,11 +123,11 @@ public class DrawingView extends View {
 			//saveImage(canvasBitmap);
 		}
 		else{
-			
 			canvas.drawBitmap(canvasBitmap2, 0, 0, canvasPaint2);
 			canvas.drawPath(drawPath, drawPaint2);
 			//saveImage(canvasBitmap2);
 		}
+		
 	}
 	
 	@Override
@@ -145,12 +145,21 @@ public class DrawingView extends View {
 		    //projectShadow(touchX,touchY);
 		    break;
 		case MotionEvent.ACTION_UP:
-		    drawCanvas.drawPath(drawPath, drawPaint);
-		    draw = true;
-		    projection.drawPath(drawPath, drawPaint2);
-		    saveImage(canvasBitmap2);
-		    draw = false;
-		    drawPath.reset();
+		    //drawCanvas.drawPath(drawPath, drawPaint);
+		    //draw = true;
+			temp = drawPath;
+		    if(draw == false)
+	    	{
+		    	drawCanvas.drawPath(temp, drawPaint);
+	    	}
+		    else
+		    {
+		    	projection.drawPath(drawPath, drawPaint);
+		    }
+		    temp.reset();
+		    //saveImage(canvasBitmap2);
+		    //draw = false;
+		    //drawPath.reset();
 		    break;
 		default:
 		    return false;
@@ -159,13 +168,16 @@ public class DrawingView extends View {
 		return true;
 	}
 	
+	
 	public void setBrushSize(float newSize){
+		
 		//update size
 		float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 
 			    newSize, getResources().getDisplayMetrics());
 			brushSize=pixelAmount;
 			drawPaint.setStrokeWidth(brushSize);
 	}
+	
 	public void setLastBrushSize(float lastSize){
 	    lastBrushSize=lastSize;
 	}
@@ -173,6 +185,7 @@ public class DrawingView extends View {
 	    return lastBrushSize;
 	}
 
+	
 	//Added  by bhupkas
 	// Convert to binary image
 	// http://stackoverflow.com/questions/16375471/binarize-image-in-android
@@ -269,7 +282,19 @@ public class DrawingView extends View {
 
 	// End of conversion to Binary Image
 	
-	private void saveImage(Bitmap b){
+	public void saveImage(){
+		
+		Bitmap b;
+		if(draw == false)
+		{
+			draw = true;
+			//drawPath.reset();
+			b = canvasBitmap;
+		}
+		else
+		{
+			b = canvasBitmap2;
+		}
 		
 		Bitmap bmp = Bitmap.createScaledBitmap(b, (int)(b.getWidth()/2), (int)(b.getHeight()/2), false);
 		
@@ -329,8 +354,6 @@ public class DrawingView extends View {
 			e.printStackTrace();
 		}
 
-
-		
 	}
 	
 }

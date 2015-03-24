@@ -353,7 +353,7 @@ int id action_menu_presenter 0x7f090006
 int id action_mode_bar 0x7f09002e
 int id action_mode_bar_stub 0x7f09002d
 int id action_mode_close_button 0x7f090020
-int id action_settings 0x7f090040
+int id action_settings 0x7f090041
 int id activity_chooser_view_content 0x7f090021
 int id always 0x7f090014
 int id beginning 0x7f09001b
@@ -378,6 +378,7 @@ int id listMode 0x7f09000a
 int id list_item 0x7f090025
 int id middle 0x7f09001d
 int id never 0x7f090017
+int id next 0x7f090040
 int id none 0x7f09000f
 int id normal 0x7f09000b
 int id progress_circular 0x7f090007
@@ -454,6 +455,7 @@ int string abc_toolbar_collapse_description 0x7f0a0004
 int string action_settings 0x7f0a0011
 int string app_name 0x7f0a0010
 int string brush 0x7f0a0013
+int string btn_display 0x7f0a0017
 int string erase 0x7f0a0014
 int string paint 0x7f0a0016
 int string save 0x7f0a0015
