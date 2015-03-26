@@ -44,9 +44,9 @@ public class DrawingView extends View {
 	//initial color
 	private int paintColor = this.getResources().getColor(R.color.Black);//0xFF660000;
 	//canvas
-	private Canvas drawCanvas,projection;
+	private Canvas drawCanvas,projection,canvas3;
 	//canvas bitmap
-	private Bitmap canvasBitmap,canvasBitmap2;
+	private Bitmap canvasBitmap,canvasBitmap2,canvasBitmap3;
 	
 	private boolean draw=false;
 	
@@ -71,7 +71,7 @@ public class DrawingView extends View {
 		brushSize = getResources().getInteger(R.integer.small_size);
 		lastBrushSize = brushSize;
 		drawPath = new Path();
-		
+		temp = new Path();
 		drawPaint = new Paint();
 		drawPaint.setColor(paintColor);
 		drawPaint.setAntiAlias(true);
@@ -97,7 +97,7 @@ public class DrawingView extends View {
 	public void startNew(){
 	    drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
 	    projection.drawColor(0, PorterDuff.Mode.CLEAR);
-	    
+	    canvas3.drawColor(0, PorterDuff.Mode.CLEAR);
 	    invalidate();
 	}
 	
@@ -111,6 +111,9 @@ public class DrawingView extends View {
 		canvasBitmap2 = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		canvasBitmap2.eraseColor(Color.WHITE);
 		projection = new Canvas(canvasBitmap2);
+		canvasBitmap3 = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		canvasBitmap3.eraseColor(Color.WHITE);
+		canvas3 = new Canvas(canvasBitmap3);
 	//	projectShadow();
 	}
 	
@@ -138,25 +141,33 @@ public class DrawingView extends View {
 		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			if(draw == true)
+			{
+				temp.moveTo(touchX, touchY);
+			}
 		    drawPath.moveTo(touchX, touchY);
 		    break;
 		case MotionEvent.ACTION_MOVE:
 		    drawPath.lineTo(touchX, touchY);
+		    if(draw == true)
+			{
+				temp.lineTo(touchX, touchY);
+			}
 		    //projectShadow(touchX,touchY);
 		    break;
 		case MotionEvent.ACTION_UP:
 		    //drawCanvas.drawPath(drawPath, drawPaint);
 		    //draw = true;
-			temp = drawPath;
 		    if(draw == false)
 	    	{
-		    	drawCanvas.drawPath(temp, drawPaint);
+		    	drawCanvas.drawPath(drawPath, drawPaint);
 	    	}
 		    else
 		    {
 		    	projection.drawPath(drawPath, drawPaint);
+		    	canvas3.drawPath(temp, drawPaint);
 		    }
-		    temp.reset();
+		   
 		    //saveImage(canvasBitmap2);
 		    //draw = false;
 		    //drawPath.reset();
@@ -283,17 +294,21 @@ public class DrawingView extends View {
 	// End of conversion to Binary Image
 	
 	public void saveImage(){
-		
+		String imgname,bimgname;
 		Bitmap b;
 		if(draw == false)
 		{
 			draw = true;
 			//drawPath.reset();
 			b = canvasBitmap;
+			imgname = "sketchpad1";
+			bimgname = "binary1";
 		}
 		else
 		{
-			b = canvasBitmap2;
+			b = canvasBitmap3;
+			imgname = "sketchpad2";
+			bimgname = "binary2";
 		}
 		
 		Bitmap bmp = Bitmap.createScaledBitmap(b, (int)(b.getWidth()/2), (int)(b.getHeight()/2), false);
@@ -303,7 +318,7 @@ public class DrawingView extends View {
 		File dir = new File(file_path);
 		if(!dir.exists())
 		dir.mkdirs();
-		File file = new File(dir, "sketchpad"  + ".jpg");
+		File file = new File(dir, imgname  + ".jpg");
 		FileOutputStream fOut;
 		try {
 			this.setDrawingCacheEnabled(true);
@@ -333,7 +348,7 @@ public class DrawingView extends View {
 
 		Bitmap bmp_binary = Bitmap.createScaledBitmap(b, (int)(b.getWidth()/2), (int)(b.getHeight()/2), false);
 		
-		File file_binary = new File(dir, "binary"  + ".jpg");
+		File file_binary = new File(dir, bimgname  + ".jpg");
 		FileOutputStream fOut_binary;
 		try {
 			this.setDrawingCacheEnabled(true);
