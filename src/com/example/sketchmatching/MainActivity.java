@@ -35,11 +35,12 @@ public class MainActivity extends Activity {
         
         drawView = (DrawingView)findViewById(R.id.drawing);
         
-        
+        //To change the size of view .
+        // Number dont work , change size manually
         
     	LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)
     	drawView.getLayoutParams();
-    	params.height = 10;
+    	params.height = 50;
     	drawView.setLayoutParams(params);
         
     	
