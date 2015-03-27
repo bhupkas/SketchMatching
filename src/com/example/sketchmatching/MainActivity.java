@@ -14,17 +14,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-
-
-
-
 public class MainActivity extends Activity {
 
 	private DrawingView drawView;
 	private float smallBrush, mediumBrush, largeBrush;
 	private long start,end;
 	private Button btnDisplay ;
-    @Override
+	private Client sender1,sender2;
+	private int cnt = 0;
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -32,7 +30,8 @@ public class MainActivity extends Activity {
         //Button function call
         nextButton();
         
-        
+        sender1 = new Client();
+        sender2 = new Client();
         drawView = (DrawingView)findViewById(R.id.drawing);
         
         //To change the size of view .
@@ -43,27 +42,14 @@ public class MainActivity extends Activity {
     	params.height = 50;
     	drawView.setLayoutParams(params);
         
-    	
-    	
-    	
-        
        //   Generate gen = new Generate();
        //   gen.generate();
-         	
-         
-       
-       
     
         smallBrush = getResources().getInteger(R.integer.small_size);
         mediumBrush = getResources().getInteger(R.integer.medium_size);
         largeBrush = getResources().getInteger(R.integer.large_size);
-        
-        
-        
         drawView.setBrushSize(smallBrush);
         drawView.setLastBrushSize(smallBrush);
-        
-        
         //drawView.startNew();
     }
 
@@ -80,8 +66,17 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Log.e("a","b");
 			drawView.saveImage();
+			cnt ++;
+			if(cnt == 1)
+			{
+				sender1.send("sketchpad1.jpg");
 			}
-			});
+			if(cnt == 2)
+			{
+				sender2.send("sketchpad2.jpg");
+			}
+		}
+		});
 	}
     
     

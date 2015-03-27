@@ -8,15 +8,16 @@
 
     <com.example.sketchmatching.DrawingView
         android:id="@+id/drawing"
-        android:layout_width="104dp"
+        android:layout_width="290dp"
         android:layout_height="282dp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
+        android:layout_weight="0.96"
         android:background="#FFFFFFFF" />
 
-<!--   -->
+    <!--  -->
 
     <Button
         android:id="@+id/next"
