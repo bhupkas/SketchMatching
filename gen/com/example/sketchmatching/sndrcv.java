@@ -1,10 +1,12 @@
 package com.example.sketchmatching;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -14,25 +16,28 @@ import android.os.Environment;
 import android.util.Log;
 
 
-public class Client {
+public class sndrcv {
 	static final int SocketServerPORT = 8080;
 	static final String ip = "192.168.1.5"; 
-	public void send(String fname) {
-		Log.e("Debug","here");
+	public void send(String msg) {
+		Log.e("Debug","In sndrcv");
 		ClientRxThread clientRxThread = 
-	    new ClientRxThread(ip, SocketServerPORT,fname);
+	    new ClientRxThread(ip, SocketServerPORT,msg);
 	    clientRxThread.start();
 	}
 	
 	private class ClientRxThread extends Thread {
 		  String dstAddress;
 		  int dstPort;
-		  String file_name;
-		  ClientRxThread(String address, int port,String fname) {
+		  private PrintWriter printwriter;
+		  private String messsage;
+		  private InputStreamReader inputStreamReader;
+		  private BufferedReader bufferedReader;
+
+		  ClientRxThread(String address, int port,String msg) {
 		   dstAddress = address;
 		   dstPort = port;
-		   file_name = fname;
-		   
+		   messsage = msg;
 		   Log.e("Debug",dstAddress);
 		  }
 
@@ -43,20 +48,20 @@ public class Client {
 			   
 			  try {
 				    socket = new Socket(dstAddress, dstPort);
-			 
-		   File file = new File(
-		     Environment.getExternalStorageDirectory() + "/Download/" +  file_name);
-		   
-		   
-		   byte[] bytes = new byte[(int) file.length()];
-		   BufferedInputStream bis;
+
 		   try {
-		    bis = new BufferedInputStream(new FileInputStream(file));
-		    bis.read(bytes, 0, bytes.length);
-		    OutputStream os = socket.getOutputStream();
-		    os.write(bytes, 0, bytes.length);
-		    os.flush();
-		    
+				printwriter = new PrintWriter(socket.getOutputStream(), true);
+				printwriter.write(messsage); // write the message to output stream
+				 
+				printwriter.flush();
+				inputStreamReader = new InputStreamReader(socket.getInputStream());
+				bufferedReader = new BufferedReader(inputStreamReader); // get the client message
+				messsage = bufferedReader.readLine();
+				Log.e("Received",messsage);
+				printwriter.close();
+				inputStreamReader.close();
+				socket.close();
+				
 		   } catch (FileNotFoundException e) {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();

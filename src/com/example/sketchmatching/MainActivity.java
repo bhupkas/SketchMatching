@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 	private long start,end;
 	private Button btnDisplay ;
 	private Client sender1,sender2;
+	private sndrcv getval;
 	private int cnt = 0;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
         
         sender1 = new Client();
         sender2 = new Client();
+        getval = new sndrcv();
         drawView = (DrawingView)findViewById(R.id.drawing);
         
         //To change the size of view .
@@ -74,6 +76,7 @@ public class MainActivity extends Activity {
 			if(cnt == 2)
 			{
 				sender2.send("sketchpad2.jpg");
+				getval.send("send val");
 			}
 		}
 		});

@@ -23,7 +23,7 @@ print('Socket now listening')
 #Function for handling connections. This will be used to create threads
 def clientthread(conn,cnt):
     #Sending message to connected client
-    conn.send('Welcome to the server. Type something and hit enter\n') #send only takes string
+    #conn.send('Welcome to the server. Type something and hit enter\n') #send only takes string
     #infinite loop so that function do not terminate and thread do not end.
     fname = "img" + str(cnt) + ".jpg"
     f = open(fname,'wb')
@@ -39,6 +39,11 @@ def clientthread(conn,cnt):
 	
     #came out of loop
     conn.close()
+
+def clientthread2(conn):
+    data = conn.recv(1024)
+    if data == "send val":
+	conn.send("1\n")
  
 #now keep talking with the client
 while 1:
@@ -47,6 +52,9 @@ while 1:
     cnt += 1
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
     #start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
-    start_new_thread(clientthread ,(conn,cnt,))
+    if cnt%3 == 0 :
+	start_new_thread(clientthread2 ,(conn,))
+    else:
+    	start_new_thread(clientthread ,(conn,cnt,))
  
 s.close()
