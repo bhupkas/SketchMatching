@@ -16,8 +16,7 @@ import android.util.Log;
 
 public class Client {
 	static final int SocketServerPORT = 8080;
-	static final String ip = "192.168.1.5"; 
-	public void send(String fname) {
+	public void send(String fname,String ip) {
 		Log.e("Debug","here");
 		ClientRxThread clientRxThread = 
 	    new ClientRxThread(ip, SocketServerPORT,fname);

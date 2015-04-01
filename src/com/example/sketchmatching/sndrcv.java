@@ -18,8 +18,7 @@ import android.util.Log;
 
 public class sndrcv {
 	static final int SocketServerPORT = 8080;
-	static final String ip = "192.168.1.5"; 
-	public void send(String msg) {
+	public void send(String msg,String ip) {
 		Log.e("Debug","In sndrcv");
 		ClientRxThread clientRxThread = 
 	    new ClientRxThread(ip, SocketServerPORT,msg);

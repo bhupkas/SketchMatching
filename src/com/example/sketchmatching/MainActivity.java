@@ -4,13 +4,17 @@ import com.example.sketchmatching.DrawingView;
 import com.example.sketchmatching.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -23,11 +27,13 @@ public class MainActivity extends Activity {
 	private Client sender1,sender2;
 	private sndrcv getval;
 	private int cnt = 0;
+	private String resultText;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_main);
+
         //Button function call
         nextButton();
         
@@ -53,6 +59,9 @@ public class MainActivity extends Activity {
         drawView.setBrushSize(smallBrush);
         drawView.setLastBrushSize(smallBrush);
         //drawView.startNew();
+     // Calling popup
+        showInputDialog();
+        
     }
 
     // Save image on button press
@@ -71,15 +80,46 @@ public class MainActivity extends Activity {
 			cnt ++;
 			if(cnt == 1)
 			{
-				sender1.send("sketchpad1.jpg");
+				sender1.send("sketchpad1.jpg",resultText);
 			}
 			if(cnt == 2)
 			{
-				sender2.send("sketchpad2.jpg");
-				getval.send("send val");
+				sender2.send("sketchpad2.jpg",resultText);
+				getval.send("send val",resultText);
 			}
 		}
 		});
+	}
+    
+    // pop up dialog boz to get ip
+    
+	protected void showInputDialog() {
+
+		// get prompts.xml view
+		LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+		View promptView = layoutInflater.inflate(R.layout.input_dialog, null);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+		alertDialogBuilder.setView(promptView);
+
+		final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+		// setup a dialog window
+		alertDialogBuilder.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						resultText = editText.getText().toString();
+						Log.e("Value",resultText);
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+		// create an alert dialog
+		AlertDialog alert = alertDialogBuilder.create();
+		alert.show();
 	}
     
     
@@ -101,4 +141,7 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    
+    
 }
