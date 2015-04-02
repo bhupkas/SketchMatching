@@ -233,7 +233,7 @@ public class DrawingView extends View {
             MappedByteBuffer map = channel.map(MapMode.READ_WRITE, 0, imgIn.getRowBytes()*height);
             imgIn.copyPixelsToBuffer(map);
             //recycle the source bitmap, this will be no longer used.
-            imgIn.recycle();
+            //imgIn.recycle();
             System.gc();// try to force the bytes from the imgIn to be released
 
             //Create a new bitmap to load the bitmap again. Probably the memory will be available. 
@@ -306,13 +306,13 @@ public class DrawingView extends View {
 		}
 		else
 		{
+			draw = false;
 			b = canvasBitmap3;
 			imgname = "sketchpad2";
 			bimgname = "binary2";
 		}
 		
 		Bitmap bmp = Bitmap.createScaledBitmap(b, (int)(b.getWidth()/2), (int)(b.getHeight()/2), false);
-		
 		String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + 
                 "/Download";
 		File dir = new File(file_path);
@@ -326,7 +326,7 @@ public class DrawingView extends View {
 			fOut = new FileOutputStream(file);
 			bmp.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
 			this.setDrawingCacheEnabled(false);
-			Log.d("This is the output", file_path);
+			Log.e("This is the output", file_path);
 			try {
 				fOut.flush();
 				fOut.close();
@@ -338,14 +338,12 @@ public class DrawingView extends View {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		// Saving in binary format
 		//String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + 
         //        "/Download/test.jpg";
 		//Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 		//b = bitmap;
 		b = convertToBinary(b);		
-
 		Bitmap bmp_binary = Bitmap.createScaledBitmap(b, (int)(b.getWidth()/2), (int)(b.getHeight()/2), false);
 		
 		File file_binary = new File(dir, bimgname  + ".jpg");
@@ -368,7 +366,20 @@ public class DrawingView extends View {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		//bmp.recycle();
+		//bmp = null;
+	}
+	
+	/* Clearing for the next iteration */
+	
+	public void clearfornext()
+	{
+		temp.reset();
+		drawPath.reset();
+		canvasBitmap.eraseColor(Color.WHITE);
+		canvasBitmap2.eraseColor(Color.WHITE);
+		canvasBitmap3.eraseColor(Color.WHITE);
+		invalidate();
 	}
 	
 }

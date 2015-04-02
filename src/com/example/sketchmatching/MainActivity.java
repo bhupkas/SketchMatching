@@ -78,14 +78,18 @@ public class MainActivity extends Activity {
 			Log.e("a","b");
 			drawView.saveImage();
 			cnt ++;
-			if(cnt == 1)
+			if(cnt%3 == 1)
 			{
 				sender1.send("sketchpad1.jpg",resultText);
 			}
-			if(cnt == 2)
+			else if(cnt%3 == 2)
 			{
 				sender2.send("sketchpad2.jpg",resultText);
+			}
+			else
+			{
 				getval.send("send val",resultText);
+				drawView.clearfornext();
 			}
 		}
 		});
