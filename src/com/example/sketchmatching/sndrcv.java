@@ -12,17 +12,35 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Environment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class sndrcv {
 	static final int SocketServerPORT = 8080;
+	
+	private String res;
+	
+	
 	public void send(String msg,String ip) {
 		Log.e("Debug","In sndrcv");
 		ClientRxThread clientRxThread = 
 	    new ClientRxThread(ip, SocketServerPORT,msg);
 	    clientRxThread.start();
+	}
+	
+	public String getanswer()
+	{
+		return res;
 	}
 	
 	private class ClientRxThread extends Thread {
@@ -32,7 +50,6 @@ public class sndrcv {
 		  private String messsage;
 		  private InputStreamReader inputStreamReader;
 		  private BufferedReader bufferedReader;
-
 		  ClientRxThread(String address, int port,String msg) {
 		   dstAddress = address;
 		   dstPort = port;
@@ -60,7 +77,7 @@ public class sndrcv {
 				printwriter.close();
 				inputStreamReader.close();
 				socket.close();
-				
+				res = messsage;
 		   } catch (FileNotFoundException e) {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();
@@ -86,5 +103,6 @@ public class sndrcv {
 			  
 		  }
 		 }
+    
 		 
 	}

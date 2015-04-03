@@ -1656,7 +1656,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
-        public static final int action_settings=0x7f090043;
+        public static final int action_settings=0x7f090044;
         public static final int activity_chooser_view_content=0x7f090021;
         public static final int always=0x7f090014;
         public static final int beginning=0x7f09001b;
@@ -1669,10 +1669,11 @@ containing a value of this type.
         public static final int drawing=0x7f09003f;
         public static final int dropdown=0x7f09001a;
         public static final int edit_query=0x7f090033;
-        public static final int edittext=0x7f090042;
+        public static final int edittext=0x7f090043;
         public static final int end=0x7f09001c;
         public static final int expand_activities_button=0x7f090022;
         public static final int expanded_menu=0x7f090028;
+        public static final int fetch=0x7f090041;
         public static final int home=0x7f090000;
         public static final int homeAsUp=0x7f09000e;
         public static final int icon=0x7f090026;
@@ -1705,7 +1706,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003c;
         public static final int tabMode=0x7f09000c;
-        public static final int textView=0x7f090041;
+        public static final int textView=0x7f090042;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;
@@ -1834,6 +1835,7 @@ containing a value of this type.
         public static final int btn_display=0x7f0a0017;
         public static final int erase=0x7f0a0014;
         public static final int paint=0x7f0a0016;
+        public static final int result=0x7f0a0018;
         public static final int save=0x7f0a0015;
         public static final int start_new=0x7f0a0012;
     }

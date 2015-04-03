@@ -8,6 +8,7 @@
 <string name="save">Save</string>
 <string name="paint">Paint</string>
 <string name="btn_display">Next</string>
+<string name="result">Result</string>
 
 
  <color name="DarkSlateGray">#2F4F4F</color>

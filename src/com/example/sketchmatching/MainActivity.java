@@ -24,16 +24,25 @@ public class MainActivity extends Activity {
 	private float smallBrush, mediumBrush, largeBrush;
 	private long start,end;
 	private Button btnDisplay ;
+	private Button resbtn; 
 	private Client sender1,sender2;
 	private sndrcv getval;
 	private int cnt = 0;
+	// Ip value is stored in resultText
 	private String resultText;
+	//Value we received
+	private String res;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_main);
 
+        
+        //Adding the functionalities
+        resButton();
+        
         //Button function call
         nextButton();
         
@@ -63,6 +72,23 @@ public class MainActivity extends Activity {
         showInputDialog();
         
     }
+	
+	
+	// Fetches the value
+	private void resButton()
+	{
+		resbtn = (Button)findViewById(R.id.fetch);
+		
+		resbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				res = getval.getanswer();
+				resbtn.setText(res);
+				btnDisplay.setText("Draw 1");
+			}
+			});
+		
+	}
 
     // Save image on button press
     // saveImage function is in different class
@@ -71,7 +97,7 @@ public class MainActivity extends Activity {
 	{
 		
 		btnDisplay = (Button) findViewById(R.id.next);
-
+		btnDisplay.setText("Draw 1");
 		btnDisplay.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -80,16 +106,20 @@ public class MainActivity extends Activity {
 			cnt ++;
 			if(cnt%3 == 1)
 			{
+				resbtn.setText("Result");
 				sender1.send("sketchpad1.jpg",resultText);
+				btnDisplay.setText("Draw 2");
 			}
 			else if(cnt%3 == 2)
 			{
 				sender2.send("sketchpad2.jpg",resultText);
+				btnDisplay.setText("Query");
 			}
 			else
 			{
 				getval.send("send val",resultText);
 				drawView.clearfornext();
+				btnDisplay.setText("Wait !");
 			}
 		}
 		});
@@ -145,7 +175,4 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
-    
-    
 }
