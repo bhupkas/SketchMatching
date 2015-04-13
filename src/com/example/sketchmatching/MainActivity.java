@@ -88,13 +88,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				res = getval.getanswer();
-				
+				final String temp[] = res.split(":");
 				Intent intent = new Intent(context, listing.class);
-			    str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
-			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
-			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
-			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
-			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[0]+".mp4";
+			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[1]+".mp4";
+			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[2]+".mp4";
+			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[3]+".mp4";
+			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[4]+".mp4";
 			    intent.putExtra("name1",str1);
 			    intent.putExtra("name2",str2);
 			    intent.putExtra("name3",str3);
