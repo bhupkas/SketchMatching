@@ -2,11 +2,15 @@ package com.example.sketchmatching;
 
 import com.example.sketchmatching.DrawingView;
 import com.example.sketchmatching.R;
+import com.example.sketchmatching.listing;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,7 +36,7 @@ public class MainActivity extends Activity {
 	private String resultText;
 	//Value we received
 	private String res;
-	
+	private String str1,str2,str3,str4,str5;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,13 +81,27 @@ public class MainActivity extends Activity {
 	// Fetches the value
 	private void resButton()
 	{
+		final Context context = this; 
 		resbtn = (Button)findViewById(R.id.fetch);
 		
 		resbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				res = getval.getanswer();
-				resbtn.setText(res);
+				
+				Intent intent = new Intent(context, listing.class);
+			    str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/v1.mp4";
+			    intent.putExtra("name1",str1);
+			    intent.putExtra("name2",str2);
+			    intent.putExtra("name3",str3);
+			    intent.putExtra("name4",str4);
+			    intent.putExtra("name5",str5);
+                startActivity(intent);   
+				//resbtn.setText(res);
 				btnDisplay.setText("Draw 1");
 			}
 			});
