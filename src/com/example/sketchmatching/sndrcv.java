@@ -78,6 +78,7 @@ public class sndrcv {
 				inputStreamReader.close();
 				socket.close();
 				res = messsage;
+				Log.e("Debug",res);
 		   } catch (FileNotFoundException e) {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();

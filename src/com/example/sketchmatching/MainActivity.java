@@ -1,5 +1,7 @@
 package com.example.sketchmatching;
 
+import java.io.File;
+
 import com.example.sketchmatching.DrawingView;
 import com.example.sketchmatching.R;
 import com.example.sketchmatching.listing;
@@ -88,13 +90,44 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				res = getval.getanswer();
+				Log.e("debug",res);
 				final String temp[] = res.split(":");
 				Intent intent = new Intent(context, listing.class);
-			    str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[0]+".mp4";
-			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[1]+".mp4";
-			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[2]+".mp4";
-			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[3]+".mp4";
-			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[4]+".mp4";
+				str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[0]+".avi";
+			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[1]+".avi";
+			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[2]+".avi";
+			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[3]+".avi";
+			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[4]+".avi";
+			    File f1 = new File(str1);
+			    if(!f1.exists())	
+		    	{
+			    	temp[0] = "0";
+		    	}
+			    File f2 = new File(str2);
+			    if(!f2.exists())	
+		    	{
+			    	temp[1] = "0";
+		    	}
+			    File f3 = new File(str3);
+			    if(!f3.exists())	
+		    	{
+			    	temp[2] = "0";
+		    	}
+			    File f4 = new File(str4);
+			    if(!f4.exists())	
+		    	{
+			    	temp[3] = "0";
+		    	}
+			    File f5 = new File(str5);
+			    if(!f5.exists())	
+		    	{
+			    	temp[4] = "0";
+		    	}
+			    str1 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[0]+".avi";
+			    str2 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[1]+".avi";
+			    str3 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[2]+".avi";
+			    str4 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[3]+".avi";
+			    str5 = Environment.getExternalStorageDirectory().getPath()+"/Download/"+temp[4]+".avi";
 			    intent.putExtra("name1",str1);
 			    intent.putExtra("name2",str2);
 			    intent.putExtra("name3",str3);
